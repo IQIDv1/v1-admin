@@ -1,26 +1,67 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Bell, LayoutDashboard, Mail, Settings, PieChart, Plug } from "lucide-react"
-import { cn } from "@/lib/utils"
-import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/components/ui/resizable"
-import { Nav } from "@/components/nav"
-import { TooltipProvider } from "@/components/ui/tooltip"
-import { Separator } from "@/components/ui/separator"
-import { usePathname } from "next/navigation"
-import type React from "react"
+import { useState } from "react";
+import {
+  Bell,
+  LayoutDashboard,
+  Mail,
+  Settings,
+  PieChart,
+  Plug,
+} from "lucide-react";
+import { cn } from "@/lib/utils";
+import {
+  ResizableHandle,
+  ResizablePanel,
+  ResizablePanelGroup,
+} from "@/components/ui/resizable";
+import { Link, Nav } from "@/components/nav";
+import { TooltipProvider } from "@/components/ui/tooltip";
+import type React from "react";
+
+const BRAND_NAME = "IQID";
 
 interface DashboardShellProps {
-  children: React.ReactNode
+  children: React.ReactNode;
 }
 
+const INIT_LINKS_STATE: Link[] = [
+  {
+    title: "Interactions",
+    icon: Mail,
+    href: "/",
+  },
+  {
+    title: "Analytics",
+    icon: PieChart,
+    href: "/analytics",
+  },
+  // {
+  //   title: "Integrations",
+  //   notificationCount: 4,
+  //   icon: Plug,
+  //   href: "/integrations",
+  // },
+  {
+    title: "Settings",
+    icon: Settings,
+    href: "/settings",
+  },
+];
+
 export function DashboardShell({ children }: DashboardShellProps) {
-  const [isCollapsed, setIsCollapsed] = useState(false)
-  const pathname = usePathname()
+  const [isCollapsed, setIsCollapsed] = useState(false);
+
+  const [links] = useState<Link[]>(INIT_LINKS_STATE);
+
+  
 
   return (
     <TooltipProvider delayDuration={0}>
-      <ResizablePanelGroup direction="horizontal" className="h-full min-h-[100vh] items-stretch">
+      <ResizablePanelGroup
+        direction="horizontal"
+        className="h-full min-h-[100vh] max-h-[100vh] items-stretch"
+      >
         <ResizablePanel
           defaultSize={20}
           collapsible={true}
@@ -30,51 +71,26 @@ export function DashboardShell({ children }: DashboardShellProps) {
           onExpand={() => setIsCollapsed(false)}
           className={cn(
             "flex flex-col bg-background",
-            isCollapsed && "min-w-[50px] transition-all duration-300 ease-in-out",
+            isCollapsed &&
+              "min-w-[50px] transition-all duration-300 ease-in-out"
           )}
         >
-          <div className="flex h-[52px] items-center justify-center border-b">
-            <span className={cn("text-xl font-bold text-purple", isCollapsed ? "hidden" : "block")}>Agent</span>
+          <div className="flex h-[52px] items-center justify-center">
+            <span
+              className={cn(
+                "text-xl font-bold text-purple cursor-default",
+                isCollapsed ? "hidden" : "block"
+              )}
+            >
+              {BRAND_NAME}
+            </span>
           </div>
-          <Separator />
-          <Nav
-            isCollapsed={isCollapsed}
-            links={[
-              {
-                title: "Interactions",
-                label: "12",
-                icon: Mail,
-                variant: pathname === "/" ? "default" : "ghost",
-                href: "/",
-              },
-              {
-                title: "Analytics",
-                label: "",
-                icon: PieChart,
-                variant: pathname === "/analytics" ? "default" : "ghost",
-                href: "/analytics",
-              },
-              {
-                title: "Integrations",
-                label: "4",
-                icon: Plug,
-                variant: pathname === "/integrations" ? "default" : "ghost",
-                href: "/integrations",
-              },
-              {
-                title: "Settings",
-                label: "",
-                icon: Settings,
-                variant: pathname === "/settings" ? "default" : "ghost",
-                href: "/settings",
-              },
-            ]}
-          />
+          <Nav isCollapsed={isCollapsed} links={links} />
         </ResizablePanel>
         <ResizableHandle withHandle />
         <ResizablePanel defaultSize={80}>
           <div className="flex h-full flex-col">
-            <header className="flex h-[52px] items-center justify-between border-b px-6">
+            {/* <header className="flex h-[52px] items-center justify-between border-b px-6">
               <div className="flex items-center gap-2">
                 <h1 className="text-xl font-semibold text-purple">Dashboard</h1>
               </div>
@@ -86,7 +102,7 @@ export function DashboardShell({ children }: DashboardShellProps) {
                   </span>
                 </button>
               </div>
-            </header>
+            </header> */}
             <main className="flex-1 overflow-auto">
               <div className="container mx-auto p-6">{children}</div>
             </main>
@@ -94,6 +110,5 @@ export function DashboardShell({ children }: DashboardShellProps) {
         </ResizablePanel>
       </ResizablePanelGroup>
     </TooltipProvider>
-  )
+  );
 }
-

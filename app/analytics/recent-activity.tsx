@@ -1,13 +1,13 @@
-"use client"
+"use client";
 
-import { CheckCircle2, Clock } from "lucide-react"
+import { CheckCircle2, Clock } from "lucide-react";
 
 interface Activity {
-  id: string
-  type: string
-  status: "completed" | "pending"
-  timestamp: string
-  description: string
+  id: string;
+  type: string;
+  status: "completed" | "pending";
+  timestamp: string;
+  description: string;
 }
 
 const recentActivities: Activity[] = [
@@ -81,7 +81,7 @@ const recentActivities: Activity[] = [
     timestamp: "45 minutes ago",
     description: "Reviewing professional judgment request",
   },
-]
+];
 
 export function RecentActivity() {
   return (
@@ -97,12 +97,15 @@ export function RecentActivity() {
           </div>
           <div className="ml-4 space-y-1">
             <p className="text-sm font-medium leading-none">{activity.type}</p>
-            <p className="text-sm text-muted-foreground">{activity.description}</p>
-            <p className="text-xs text-muted-foreground">{activity.timestamp}</p>
+            <p className="text-sm text-muted-foreground">
+              {activity.description}
+            </p>
+            <p className="text-xs text-muted-foreground">
+              {activity.timestamp}
+            </p>
           </div>
         </div>
       ))}
     </div>
-  )
+  );
 }
-

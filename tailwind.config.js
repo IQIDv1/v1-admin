@@ -1,5 +1,3 @@
-const { fontFamily } = require("tailwindcss/defaultTheme")
-
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   darkMode: ["class"],
@@ -59,7 +57,7 @@ module.exports = {
         sm: "calc(var(--radius) - 4px)",
       },
       fontFamily: {
-        sans: ["var(--font-sans)", ...fontFamily.sans],
+        sans: ["Playfair Display", "Georgia", "Times New Roman", "serif"],
       },
       keyframes: {
         "accordion-down": {
@@ -78,5 +76,4 @@ module.exports = {
     },
   },
   plugins: [require("tailwindcss-animate")],
-}
-
+};
